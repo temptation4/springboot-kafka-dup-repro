@@ -1,0 +1,84 @@
+{
+  "info": {
+    "name": "Kafka Duplicate Repro - Postman",
+    "_postman_id": "d3dfcb94-3fd1-4d7d-8cb1-48c8fcb7e812",
+    "description": "Collection to reproduce Kafka duplicate messages by simulating lost ACK with proxy block/unblock.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Status",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/status",
+          "host": ["{{baseUrl}}"],
+          "path": ["status"]
+        }
+      }
+    },
+    {
+      "name": "Block proxy (drop ACKs upstream)",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/proxy/block",
+          "host": ["{{baseUrl}}"],
+          "path": ["proxy", "block"]
+        }
+      }
+    },
+    {
+      "name": "Send - 1st (query key)",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/send?key={{key}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["send"],
+          "query": [
+            { "key": "key", "value": "{{key}}" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Sleep placeholder (use Runner delay)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/status",
+          "host": ["{{baseUrl}}"],
+          "path": ["status"]
+        }
+      },
+      "description": "Use Postman Runner with 5000ms delay so broker persists while blocked"
+    },
+    {
+      "name": "Unblock proxy (allow ACKs)",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/proxy/unblock",
+          "host": ["{{baseUrl}}"],
+          "path": ["proxy", "unblock"]
+        }
+      }
+    },
+    {
+      "name": "Send - 2nd (same key)",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/send?key={{key}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["send"],
+          "query": [
+            { "key": "key", "value": "{{key}}" }
+          ]
+        }
+      }
+    }
+  ]
+}
+

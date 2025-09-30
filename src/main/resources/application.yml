@@ -1,0 +1,31 @@
+server:
+  port: 8081
+
+spring:
+  kafka:
+    # overridden programmatically to use proxy pointing at Testcontainers or external Kafka
+    bootstrap-servers: 127.0.0.1:29099
+    consumer:
+      group-id: dup-repro-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+    producer:
+      properties:
+        acks: all
+        retries: 200
+        max.in.flight.requests.per.connection: 1
+        request.timeout.ms: 1500       # short: producer will time out quickly if ACK blocked
+        delivery.timeout.ms: 120000
+        enable.idempotence: false     # must be false to allow duplicates on retry
+      # must be false to allow duplicates on retry
+
+
+app:
+  topic: order.created
+
+logging:
+  level:
+    org.springframework.kafka: INFO
+    org.apache.kafka: INFO
