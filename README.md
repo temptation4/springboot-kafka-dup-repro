@@ -9,7 +9,7 @@ spring.kafka.producer.properties must include (temporary test values):
 acks: all
 retries: 200
 max.in.flight.requests.per.connection: 1
-request.timeout.ms: 1000      # short so producer times out quickly
+request.timeout.ms: 1000      # short so producer times out quickly 
 
 delivery.timeout.ms: 120000
 enable.idempotence: false    # MUST be false to allow duplicates on retry
