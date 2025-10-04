@@ -4,7 +4,7 @@ Prerequisites (important)
 
 App running at http://localhost:8081.
 
-spring.kafka.producer.properties must include (temporary test values):
+spring.kafka.producer.properties must include (temporary test values): 
 
 acks: all
 retries: 200
