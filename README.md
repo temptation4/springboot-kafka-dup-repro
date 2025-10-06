@@ -1,4 +1,4 @@
-Reproduce lost-ACK → automatic-retry → duplicate (exact steps) 
+Reproduce lost-ACK → automatic-retry → duplicate (exact steps)  
 
 Prerequisites (important)
 
